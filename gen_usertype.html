@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-language" content="ja">
+	<meta charset="UTF-8">
+  <title>SystemC Helper</title>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+  <link ref="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+  <!-- highlight.js -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <!-- local -->
+  <script type="text/javascript" src="js/micro_template.js"> </script>
+  <script type="text/javascript" src="tmpl/tmpl_usertype_h.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="starter-template">
+
+	<h1>UserDataType Generetor</h1>
+
+  <div>
+  <table>
+      <tr>
+        <td>構造体名</td>
+        <td><input id="struct_name" type="textbox" class="form-control" value="data_t"/></td> 
+      </tr>
+  </table>
+  </div>
+
+  <table id="signal_table" class="table table-bordered">
+    <thead>
+    <tr>
+      <th name="var_name">変数名</th>
+      <th name="type">型</th>
+      <th name="num">数</th>
+      <th nane="nonw"></th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <div><button id="btn-ok" class="btn btn-success">view code</button></div>
+
+	<div id="results">
+	</div>
+
+	<hr/>
+
+  <pre><code id="view_form" class="cpp">
+  </code></pre>
+
+  </div>
+  </div>
+
+  <script>
+$(document).ready(function () {
+
+  insert_signal( "data0", "sc_uint<32>", 1 );
+  insert_signal( "data1", "sc_uint<32>", 1 );
+
+  $('.rowup').click(function() {
+    var $row = $(this).closest("tr");
+    var $row_prev = $row.prev("tr");
+    if($row.prev.length) {
+      $row.insertBefore($row_prev);
+    }
+  });
+  $('.rowdown').click(function() {
+    var $row = $(this).closest("tr");
+    var $row_next = $row.next("tr");
+    if($row_next.length) {
+      $row.insertAfter($row_next);
+    }
+  });
+  $('.rowdel').click(function() {
+     var row = $(this).closest("tr").remove();
+     $(row).remove();
+  });
+  $('.rowins').click(function() {
+     var $row = $(this).closest("tr");
+      var $newRow = $row.clone(true);
+       $newRow.insertAfter($row);
+  });
+
+});  
+
+  function insert_signal( name, type, num ) {
+
+    var row =`
+      <tr>
+        <td><input name="var_name"  class="form-control" value="${name}"/></td>
+        <td><input name="type" class="form-control" value="${type}"/></td>
+        <td><input name="num" class="form-control" size="3" value="${num}"/></td>
+        <td>
+          <button class="rowup   btn btn-default">↑</button>
+          <button class="rowdown btn btn-default">↓</button>
+          <button class="rowins  btn btn-default">+</button>
+          <button class="rowdel  btn btn-default">-</button>
+        </td>
+      </tr>
+    `;
+    $("#signal_table > tbody").append( row );
+  }
+
+  function table_to_array(name) {
+    var keys = [];
+    var signals = [];
+    var tr = $("#signal_table tr");
+    for (var i=0; i<1; i++) {
+      var cells = tr.eq(i).children();
+      for (var j=0,m=cells.length; j<m-1; j++) { // length - control
+        keys[j] = cells.eq(j).attr("name");
+      }
+    }
+    for (var i=1,l=tr.length; i<l; i++) {
+      var cells = tr.eq(i).children();
+      signal = {};
+      for (var j=0,m=cells.length; j<m-1; j++) { // length - control
+        if (cells.eq(j).find("input").length) {
+          signal[keys[j]] = cells.eq(j).find("input").val();
+        } else {
+          signal[keys[j]] = cells.eq(j).text();
+        }
+      }
+      signals[i-1] = signal;
+    }
+    return signals;
+  }
+
+  $("#btn-ok").click(function() {
+
+    var json = {
+      "struct_name": $("#struct_name").val(),
+      "signals": table_to_array("#signal_table"),
+    };
+//    var view = document.getElementById("view_form");
+		$("#view_form").text( tmpl(tmpl_usertype_h, json) );
+    console.log( json );
+
+    hljs.highlightBlock( $("#view_form")[0] );
+  });
+
+  </script>
+
+</body>
+
+</html>
