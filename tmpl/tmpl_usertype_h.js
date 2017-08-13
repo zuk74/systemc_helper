@@ -27,7 +27,7 @@ struct <%= struct_name %>
     );
   }
 
-  friend ostream& operator < (ostream& os, const <%= struct_name %>& trans) {
+  friend ostream& operator << (ostream& os, const <%= struct_name %>& trans) {
     os << "(";
 <% for (var i=0; i<signals.length; i++) { %>
 <%   if (i==0) { %>
@@ -40,7 +40,7 @@ struct <%= struct_name %>
     return os;
   }
 
-  friend void sc_trace(sc_trace_file*& tf, const <%= struct_name %> trans, std::string nm) {
+  friend void sc_trace(sc_trace_file*& tf, const <%= struct_name %>& trans, std::string nm) {
 <% for (var i=0; i<signals.length; i++) { %>
     sc_trace( tf, trans.<%=signals[i].var_name %>, nm + ".<%= signals[i].var_name %>" );
 <% } %>
