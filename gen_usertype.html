@@ -38,52 +38,54 @@
     </div>
 
     <div class="starter-template">
-
       <h1>UserDataType Generator</h1>
-
-      <div>
-      <table>
-          <tr>
-            <td>構造体名</td>
-            <td><input id="struct_name" type="textbox" class="form-control" value="data_t"/></td> 
-          </tr>
-      </table>
-      </div>
-
-      <table id="signal_table" class="table table-bordered">
-        <thead>
-        <tr>
-          <th name="var_name">変数名</th>
-          <th name="type">型</th>
-          <th name="num">数</th>
-          <th name="nonw">移動,追加,削除</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-
-      <div><button id="btn-create" class="btn btn-primary">view code</button></div>
-
-      <hr/>
-
-      <pre>
-        <code id="view_form" class="cpp">
-        </code>
-      </pre>
-
-      <div id="output">
-        <div id="file_name"></div>
-        <a id="download"></a>
-      </div>
-
-      <hr/>
-
-      <footer class="footer">
-        <p>&copy; shingo.zukunashi 2017</p>
-      </footer>
-
+      <p class="lead">ユーザデータタイプを生成します</p>
     </div>
+    <hr/>
+
+    <div>
+    <table>
+        <tr>
+          <td>構造体名</td>
+          <td><input id="struct_name" type="textbox" class="form-control" value="data_t"/></td> 
+        </tr>
+    </table>
+    </div>
+    <p/>
+
+    <table id="signal_table" class="table table-bordered">
+      <thead>
+      <tr>
+        <th name="var_name">変数名</th>
+        <th name="type">型</th>
+        <th name="num">数</th>
+        <th name="nonw">移動,追加,削除</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <div><button id="btn-create" class="btn btn-primary">View Code</button></div>
+
+    <hr/>
+
+    <pre>
+      <code id="view_form" class="cpp">
+      </code>
+    </pre>
+
+    <div id="output">
+      <div id="file_name"></div>
+      <a id="download"></a>
+    </div>
+
+    <hr/>
+
+    <footer class="footer">
+      <p>&copy; shingo.zukunashi 2017</p>
+    </footer>
+
   </div> <!-- /container -->
 
   <script>

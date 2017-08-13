@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-language" content="ja">
+	<meta charset="UTF-8">
+  <title>SystemC Helper</title>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+  <!-- highlight.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <!-- local -->
+  <script type="text/javascript" src="js/micro_template.js"> </script>
+  <script type="text/javascript" src="tmpl/tmpl_dut_cpp.js"></script>
+  <script type="text/javascript" src="tmpl/tmpl_dut_h.js"></script>
+  <script type="text/javascript" src="tmpl/tmpl_main_cpp.js"></script>
+  <script type="text/javascript" src="tmpl/tmpl_cmakelists_txt.js"></script>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills float-right">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </nav>
+      <h3 class="text-muted">SystemC Helper</h3>
+    </div>
+
+    <div class="starter-template">
+      <h1>Skeleton Generator</h1>
+      <p class="lead">DUTと単体テスト環境を生成します</p>
+    </div>
+    <hr/>
+
+    <div>
+    <table>
+        <tr>
+          <td>モジュール名：</td>
+          <td><input id="module_name" type="textbox" class="form-control" value="dut"/></td> 
+        </tr>
+    </table>
+    </div>
+    <p/>
+
+    <table id="signal_table" class="table table-bordered">
+      <thead>
+      <tr>
+        <th name="var_name">変数名</th>
+        <th name="type">型</th>
+        <th name="dir">I/O</th>
+        <th name="kind">属性</th>
+        <th name="num">数</th>
+        <th name="none">移動,追加,削除</th>
+      </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <div><button id="btn-generate" class="btn btn-primary">View Code</button></div>
+
+    <hr/>
+
+    <ul class="nav nav-tabs" id="code-tab">
+      <!--
+      <li class="active"><a href="#code_0" data-toggle="tab">Home</a></li>
+      <li><a href="#code_1" data-toggle="tab">Menu 1</a></li>
+      <li><a href="#code_2" data-toggle="tab">Menu 2</a></li>
+      <li><a href="#code_3" data-toggle="tab">Menu 3</a></li>
+      -->
+    </ul> 
+
+    <div id="code-list" class="tab-content">
+      <div id="code_0" class="tab-pane fade in active">
+        <pre> <code id="view_form_0"></code> </pre>
+      </div>
+      <div id="code_1" class="tab-pane fade">
+        <pre> <code id="view_form_1"></code> </pre>
+      </div>
+      <div id="code_2" class="tab-pane fade">
+        <pre> <code id="view_form_2"></code> </pre>
+      </div>
+      <div id="code_3" class="tab-pane fade">
+        <pre> <code id="view_form_3"></code> </pre>
+      </div>
+      <div id="code_4" class="tab-pane fade">
+        <pre> <code id="view_form_4"></code> </pre>
+      </div>
+      <div id="code_5" class="tab-pane fade">
+        <pre> <code id="view_form_5"></code> </pre>
+      </div>
+      <div id="code_6" class="tab-pane fade">
+        <pre> <code id="view_form_6"></code> </pre>
+      </div>
+      <div id="code_7" class="tab-pane fade">
+        <pre> <code id="view_form_7"></code> </pre>
+      </div>
+      <div id="code_8" class="tab-pane fade">
+        <pre> <code id="view_form_8"></code> </pre>
+      </div>
+      <div id="code_9" class="tab-pane fade">
+        <pre> <code id="view_form_9"></code> </pre>
+      </div>
+    </div> <!-- id="code-list" -->
+
+    <div id="output">
+      <div id="file_name"></div>
+      <a id="download"></a>
+    </div>
+
+    <hr/>
+    <footer class="footer">
+      <p>&copy; shingo.zukunashi 2017</p>
+    </footer>
+
+  </div> <!-- /container -->
+
+  <script>
+$(document).ready(function () {
+
+  insert_signal( {"var_name": "clk" , "dir": "in" , "type": "bool"       , "kind": "clock"         , "num": 1} );
+  insert_signal( {"var_name": "rst" , "dir": "in" , "type": "bool"       , "kind": "sync_reset_pos", "num": 1} );
+  insert_signal( {"var_name": "ien" , "dir": "in" , "type": "bool"       , "kind": "data"          , "num": 1} );
+  insert_signal( {"var_name": "idat", "dir": "in" , "type": "sc_uint<32>", "kind": "data"          , "num": 1} );
+  insert_signal( {"var_name": "oen" , "dir": "out", "type": "bool"       , "kind": "data"          , "num": 1} );
+  insert_signal( {"var_name": "odat", "dir": "out", "type": "sc_uint<32>", "kind": "data"          , "num": 1} );
+
+  $('.rowup').click(function() {
+    var $row = $(this).closest("tr");
+    var $row_prev = $row.prev("tr");
+    if($row.prev.length) {
+      $row.insertBefore($row_prev);
+    }
+  });
+  $('.rowdown').click(function() {
+    var $row = $(this).closest("tr");
+    var $row_next = $row.next("tr");
+    if($row_next.length) {
+      $row.insertAfter($row_next);
+    }
+  });
+  $('.rowdel').click(function() {
+     var row = $(this).closest("tr").remove();
+     $(row).remove();
+  });
+  $('.rowins').click(function() {
+     var $row = $(this).closest("tr");
+      var $newRow = $row.clone(true);
+       $newRow.insertAfter($row);
+  });
+
+});  
+
+  function insert_signal( param ) {
+
+    var row =`
+      <tr>
+        <td><input name="var_name"  class="form-control" value="${param.var_name}"/></td>
+        <td><input name="type" class="form-control" size="5" value="${param.type}"/></td>
+        <td><input name="dir" class="form-control" size="3" value="${param.dir}"/></td>
+        <td><input name="kind" class="form-control" size="5" value="${param.kind}"/></td>
+        <td><input name="num" class="form-control" size="3" value="${param.num}"/></td>
+        <td>
+          <button class="rowup   btn btn-default">↑</button>
+          <button class="rowdown btn btn-default">↓</button>
+          <button class="rowins  btn btn-default">+</button>
+          <button class="rowdel  btn btn-default">-</button>
+        </td>
+      </tr>
+    `;
+    $("#signal_table > tbody").append( row );
+  }
+
+  function table_to_array(name) {
+    var keys = [];
+    var signals = [];
+    var tr = $("#signal_table tr");
+    for (var i=0; i<1; i++) {
+      var cells = tr.eq(i).children();
+      for (var j=0,m=cells.length; j<m-1; j++) { // length - control
+        keys[j] = cells.eq(j).attr("name");
+      }
+    }
+    for (var i=1,l=tr.length; i<l; i++) {
+      var cells = tr.eq(i).children();
+      signal = {};
+      for (var j=0,m=cells.length; j<m-1; j++) { // length - control
+        if (cells.eq(j).find("input").length) {
+          signal[keys[j]] = cells.eq(j).find("input").val();
+        } else {
+          signal[keys[j]] = cells.eq(j).text();
+        }
+      }
+      signals[i-1] = signal;
+    }
+    return signals;
+  }
+
+  $("#btn-generate").click(function() {
+
+    var json = {
+      "module_name": $("#module_name").val(),
+      "signals": table_to_array("#signal_table"),
+    };
+
+    var template_list = [
+      {"tmpl": tmpl_dut_h, "filename": json.module_name+".h", "kind":"cpp"},
+      {"tmpl": tmpl_dut_cpp, "filename": json.module_name+".cpp", "kind":"cpp"},
+      {"tmpl": tmpl_main_cpp, "filename": "main.cpp", "kind":""},
+      {"tmpl": tmpl_cmakelists_txt, "filename": "CMakeLists.txt", kind:""},
+    ];
+
+    // タブを一旦空にする
+    $("#code-tab").empty();
+    // タブ追加とテンプレートデータを更新
+    $.each( template_list, function( idx, val ) {
+      if (idx == 0) {
+        $("#code-tab").append("<li class='active'><a href='#code_"+idx + "' data-toggle='tab'>"+val.filename+"</a></li>");
+      } else {
+        $("#code-tab").append("<li><a href='#code_"+idx + "' data-toggle='tab'>"+val.filename+"</a></li>");
+      }
+      $("#view_form_"+idx).attr( "class", val.kind );
+      $("#view_form_"+idx).text( tmpl( val.tmpl, json ) );
+      hljs.highlightBlock( $("#view_form_"+idx)[0] );
+    });
+
+
+//    // download button
+//    $("#download").html(
+//      '<div class="btn btn-success">Download</div>'
+//    );
+//
+//    $("#file_name").text( $("#module_name").val() + ".h" );
+//
+//    var content = $("#view_form").text();
+//    var blob = new Blob([ content ], {"type": "application/x-msdownload"});
+//    window.URL = window.URL || widow.webkitURL;
+//    $("#download").attr("href", window.URL.createObjectURL( blob ) );
+//    $("#download").attr("download", $("#module_name").val() + ".h" );
+  });
+
+  </script>
+
+</body>
+
+</html>
