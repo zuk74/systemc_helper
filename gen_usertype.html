@@ -22,7 +22,7 @@
   <div class="container">
     <div class="starter-template">
 
-	<h1>UserDataType Generetor</h1>
+	<h1>SystemC UserDataType Generetor</h1>
 
   <div>
   <table>
@@ -39,25 +39,28 @@
       <th name="var_name">変数名</th>
       <th name="type">型</th>
       <th name="num">数</th>
-      <th nane="nonw"></th>
+      <th name="nonw">移動,追加,削除</th>
     </tr>
     </thead>
     <tbody>
     </tbody>
   </table>
 
-  <div><button id="btn-ok" class="btn btn-success">view code</button></div>
+  <div><button id="btn-create" class="btn btn-primary">view code</button></div>
 
-	<div id="results">
-	</div>
+  <hr/>
 
-	<hr/>
+  <pre>
+    <code id="view_form" class="cpp">
+    </code>
+  </pre>
 
-  <pre><code id="view_form" class="cpp">
-  </code></pre>
-
+  <div id="output">
+    <div id="file_name"></div>
+    <a id="download"></a>
   </div>
-  </div>
+
+  <hr/>
 
   <script>
 $(document).ready(function () {
@@ -134,7 +137,7 @@ $(document).ready(function () {
     return signals;
   }
 
-  $("#btn-ok").click(function() {
+  $("#btn-create").click(function() {
 
     var json = {
       "struct_name": $("#struct_name").val(),
@@ -145,6 +148,19 @@ $(document).ready(function () {
     console.log( json );
 
     hljs.highlightBlock( $("#view_form")[0] );
+
+    // download button
+    $("#download").html(
+      '<div class="btn btn-success">Download</div>'
+    );
+
+    $("#file_name").text( $("#struct_name").val() + ".h" );
+
+    var content = $("#view_form").text();
+    var blob = new Blob([ content ], {"type": "application/x-msdownload"});
+    window.URL = window.URL || widow.webkitURL;
+    $("#download").attr("href", window.URL.createObjectURL( blob ) );
+    $("#download").attr("download", $("#struct_name").val() + ".h" );
   });
 
   </script>
