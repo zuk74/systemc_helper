@@ -1,1 +1,0 @@
-# systemc_helper
