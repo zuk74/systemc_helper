@@ -16,6 +16,7 @@ link_directories(${SYSTEMC_HOME}/lib-macosx64)
 set(SRCS
     main.cpp
     systop.cpp
+    tb.cpp
     <%= module_name %>.cpp
    )
 

@@ -18,6 +18,8 @@
   <script type="text/javascript" src="tmpl/tmpl_dut_h.js"></script>
   <script type="text/javascript" src="tmpl/tmpl_systop_cpp.js"></script>
   <script type="text/javascript" src="tmpl/tmpl_systop_h.js"></script>
+  <script type="text/javascript" src="tmpl/tmpl_tb_cpp.js"></script>
+  <script type="text/javascript" src="tmpl/tmpl_tb_h.js"></script>
   <script type="text/javascript" src="tmpl/tmpl_main_cpp.js"></script>
   <script type="text/javascript" src="tmpl/tmpl_cmakelists_txt.js"></script>
 </head>
@@ -221,12 +223,14 @@ $(document).ready(function () {
     };
 
     var template_list = [
-      {"tmpl": tmpl_dut_h, "filename": json.module_name+".h", "kind":"cpp"},
-      {"tmpl": tmpl_dut_cpp, "filename": json.module_name+".cpp", "kind":"cpp"},
-      {"tmpl": tmpl_systop_h, "filename": "systop.h", "kind":"cpp"},
-      {"tmpl": tmpl_systop_cpp, "filename": "systop.cpp", "kind":"cpp"},
-      {"tmpl": tmpl_main_cpp, "filename": "main.cpp", "kind":"cpp"},
-      {"tmpl": tmpl_cmakelists_txt, "filename": "CMakeLists.txt", kind:"cmake"},
+      {"tmpl": tmpl_dut_h         , "filename": json.module_name+".h"   , "kind":"cpp"  },
+      {"tmpl": tmpl_dut_cpp       , "filename": json.module_name+".cpp" , "kind":"cpp"  },
+      {"tmpl": tmpl_tb_h          , "filename": "tb.h"                  , "kind":"cpp"  },
+      {"tmpl": tmpl_tb_cpp        , "filename": "tb.cpp"                , "kind":"cpp"  },
+      {"tmpl": tmpl_systop_h      , "filename": "systop.h"              , "kind":"cpp"  },
+      {"tmpl": tmpl_systop_cpp    , "filename": "systop.cpp"            , "kind":"cpp"  },
+      {"tmpl": tmpl_main_cpp      , "filename": "main.cpp"              , "kind":"cpp"  },
+      {"tmpl": tmpl_cmakelists_txt, "filename": "CMakeLists.txt"        , "kind":"cmake"},
     ];
 
     // タブを一旦空にする
