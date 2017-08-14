@@ -1,4 +1,4 @@
-var tmpl_cmakelists_txt = (function() {/*
+var tmpl_cmakelists_txt = (function() {/*\
 cmake_minimum_required(VERSION 2.8)
 SET(CMAKE_COLOR_MAKEFILE ON)
 SET(CTEST_COLOR_MAKEFILE ON)

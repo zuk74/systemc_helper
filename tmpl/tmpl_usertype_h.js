@@ -1,4 +1,5 @@
-var tmpl_usertype_h = (function() {/*#ifndef __<%= struct_name.toUpperCase() %>_H_
+var tmpl_usertype_h = (function() {/*\
+#ifndef __<%= struct_name.toUpperCase() %>_H_
 #define __<%= struct_name.toUpperCase() %>_H_
 
 #include <systemc.h>

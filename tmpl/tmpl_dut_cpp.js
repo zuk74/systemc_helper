@@ -1,4 +1,4 @@
-var tmpl_dut_cpp = (function() {/*
+var tmpl_dut_cpp = (function() {/*\
 #include "<%= module_name%>.h"
 
 void <%= module_name %>::thread_main()

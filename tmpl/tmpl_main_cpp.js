@@ -1,4 +1,4 @@
-var tmpl_main_cpp = (function() {/*
+var tmpl_main_cpp = (function() {/*\
 #include <systemc.h>
 #include "systop.h"
 

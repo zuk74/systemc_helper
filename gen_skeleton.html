@@ -12,6 +12,9 @@
   <!-- highlight.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+  <!-- jszip -->
+  <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.js"></script>
   <!-- local -->
   <script type="text/javascript" src="js/micro_template.js"> </script>
   <script type="text/javascript" src="tmpl/tmpl_dut_cpp.js"></script>
@@ -122,8 +125,6 @@
     </div> <!-- id="code-list" -->
 
     <div id="output">
-      <div id="file_name"></div>
-      <a id="download"></a>
     </div>
 
     <hr/>
@@ -238,9 +239,9 @@ $(document).ready(function () {
     // タブ追加とテンプレートデータを更新
     $.each( template_list, function( idx, val ) {
       if (idx == 0) {
-        $("#code-tab").append("<li class='active'><a href='#code_"+idx + "' data-toggle='tab'>"+val.filename+"</a></li>");
+        $("#code-tab").append("<li class='active'><a id='code_name_"+idx+"' href='#code_"+idx + "' data-toggle='tab'>"+val.filename+"</a></li>");
       } else {
-        $("#code-tab").append("<li><a href='#code_"+idx + "' data-toggle='tab'>"+val.filename+"</a></li>");
+        $("#code-tab").append("<li><a id='code_name_"+idx+"' href='#code_"+idx + "' data-toggle='tab'>"+val.filename+"</a></li>");
       }
       $("#view_form_"+idx).attr( "class", val.kind );
       $("#view_form_"+idx).text( tmpl( val.tmpl, json ) );
@@ -248,19 +249,35 @@ $(document).ready(function () {
     });
 
 
-//    // download button
-//    $("#download").html(
-//      '<div class="btn btn-success">Download</div>'
-//    );
+    // download button
+    $("#output").html(
+      '<div id="download-link" class="btn btn-success">Download All</div>'
+    );
+
+    var folder_name = "test_"+json.module_name;
+    $("#download-link").click(function() {
+      var zip = new JSZip();
+      for (var i=0; i<10; i++) {
+        if ( $("#code_name_"+i).text() != "" ) {
+          zip.file( folder_name+"/"+$("#code_name_"+i).text(), $("#code_"+i).text() );
+        }
+          console.log( $("#code_name_"+i).text() );
+      }
+      zip.generateAsync({type : "blob"}).then(function (content) {
+        saveAs(content, folder_name+".zip");
+      });
+    });
+
 //
 //    $("#file_name").text( $("#module_name").val() + ".h" );
 //
 //    var content = $("#view_form").text();
 //    var blob = new Blob([ content ], {"type": "application/x-msdownload"});
 //    window.URL = window.URL || widow.webkitURL;
-//    $("#download").attr("href", window.URL.createObjectURL( blob ) );
-//    $("#download").attr("download", $("#module_name").val() + ".h" );
+//    $("#download-link").attr("href", window.URL.createObjectURL( blob ) );
+//    $("#download-link").attr("download", $("#module_name").val() + ".h" );
   });
+
 
   </script>
 

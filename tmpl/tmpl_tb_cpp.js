@@ -1,4 +1,5 @@
-var tmpl_tb_cpp = (function() {/*#include "tb.h"
+var tmpl_tb_cpp = (function() {/*\
+#include "tb.h"
 
 void tb::thread_src()
 {

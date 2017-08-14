@@ -1,4 +1,5 @@
-var tmpl_tb_h = (function() {/*#ifndef __TB_H_
+var tmpl_tb_h = (function() {/*\
+#ifndef __TB_H_
 #define __TB_H_
 
 #include <systemc.h>

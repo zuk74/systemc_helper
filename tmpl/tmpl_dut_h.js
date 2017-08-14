@@ -1,4 +1,5 @@
-var tmpl_dut_h = (function() {/*#ifndef __<%= module_name.toUpperCase() %>_H_
+var tmpl_dut_h = (function() {/*\
+#ifndef __<%= module_name.toUpperCase() %>_H_
 #define __<%= module_name.toUpperCase() %>_H_
 
 #include <systemc.h>

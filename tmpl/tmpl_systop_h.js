@@ -1,7 +1,10 @@
-var tmpl_systop_h = (function() {/*#ifndef __SYSTOP_H_
+var tmpl_systop_h = (function() {/*\
+#ifndef __SYSTOP_H_
 #define __SYSTOP_H_
 
 #include <systemc.h>
+#include "<%= module_name %>.h"
+#include "tb.h"
 
 SC_MODULE( systop )
 {
