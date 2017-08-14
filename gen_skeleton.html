@@ -244,7 +244,7 @@ $(document).ready(function () {
         $("#code-tab").append("<li><a id='code_name_"+idx+"' href='#code_"+idx + "' data-toggle='tab'>"+val.filename+"</a></li>");
       }
       $("#view_form_"+idx).attr( "class", val.kind );
-      $("#view_form_"+idx).text( tmpl( val.tmpl, json ) );
+      $("#view_form_"+idx).text( tmpl( val.tmpl, json ).slice(1) );
       hljs.highlightBlock( $("#view_form_"+idx)[0] );
     });
 
@@ -259,9 +259,8 @@ $(document).ready(function () {
       var zip = new JSZip();
       for (var i=0; i<10; i++) {
         if ( $("#code_name_"+i).text() != "" ) {
-          zip.file( folder_name+"/"+$("#code_name_"+i).text(), $("#code_"+i).text() );
+          zip.file( folder_name+"/"+$("#code_name_"+i).text(), $("#view_form_"+i).text() );
         }
-          console.log( $("#code_name_"+i).text() );
       }
       zip.generateAsync({type : "blob"}).then(function (content) {
         saveAs(content, folder_name+".zip");
