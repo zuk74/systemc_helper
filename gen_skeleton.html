@@ -16,6 +16,8 @@
   <script type="text/javascript" src="js/micro_template.js"> </script>
   <script type="text/javascript" src="tmpl/tmpl_dut_cpp.js"></script>
   <script type="text/javascript" src="tmpl/tmpl_dut_h.js"></script>
+  <script type="text/javascript" src="tmpl/tmpl_systop_cpp.js"></script>
+  <script type="text/javascript" src="tmpl/tmpl_systop_h.js"></script>
   <script type="text/javascript" src="tmpl/tmpl_main_cpp.js"></script>
   <script type="text/javascript" src="tmpl/tmpl_cmakelists_txt.js"></script>
 </head>
@@ -123,6 +125,7 @@
     </div>
 
     <hr/>
+
     <footer class="footer">
       <p>&copy; shingo.zukunashi 2017</p>
     </footer>
@@ -132,12 +135,12 @@
   <script>
 $(document).ready(function () {
 
-  insert_signal( {"var_name": "clk" , "dir": "in" , "type": "bool"       , "kind": "clock"         , "num": 1} );
-  insert_signal( {"var_name": "rst" , "dir": "in" , "type": "bool"       , "kind": "sync_reset_pos", "num": 1} );
-  insert_signal( {"var_name": "ien" , "dir": "in" , "type": "bool"       , "kind": "data"          , "num": 1} );
-  insert_signal( {"var_name": "idat", "dir": "in" , "type": "sc_uint<32>", "kind": "data"          , "num": 1} );
-  insert_signal( {"var_name": "oen" , "dir": "out", "type": "bool"       , "kind": "data"          , "num": 1} );
-  insert_signal( {"var_name": "odat", "dir": "out", "type": "sc_uint<32>", "kind": "data"          , "num": 1} );
+  insert_signal( {"var_name": "clk" , "dir": "in" , "type": "bool"       , "kind": "clock"     , "num": 1} );
+  insert_signal( {"var_name": "rst" , "dir": "in" , "type": "bool"       , "kind": "sync_reset", "num": 1} );
+  insert_signal( {"var_name": "ien" , "dir": "in" , "type": "bool"       , "kind": "data"      , "num": 1} );
+  insert_signal( {"var_name": "idat", "dir": "in" , "type": "sc_uint<32>", "kind": "data"      , "num": 1} );
+  insert_signal( {"var_name": "oen" , "dir": "out", "type": "bool"       , "kind": "data"      , "num": 1} );
+  insert_signal( {"var_name": "odat", "dir": "out", "type": "sc_uint<32>", "kind": "data"      , "num": 1} );
 
   $('.rowup').click(function() {
     var $row = $(this).closest("tr");
@@ -220,8 +223,10 @@ $(document).ready(function () {
     var template_list = [
       {"tmpl": tmpl_dut_h, "filename": json.module_name+".h", "kind":"cpp"},
       {"tmpl": tmpl_dut_cpp, "filename": json.module_name+".cpp", "kind":"cpp"},
-      {"tmpl": tmpl_main_cpp, "filename": "main.cpp", "kind":""},
-      {"tmpl": tmpl_cmakelists_txt, "filename": "CMakeLists.txt", kind:""},
+      {"tmpl": tmpl_systop_h, "filename": "systop.h", "kind":"cpp"},
+      {"tmpl": tmpl_systop_cpp, "filename": "systop.cpp", "kind":"cpp"},
+      {"tmpl": tmpl_main_cpp, "filename": "main.cpp", "kind":"cpp"},
+      {"tmpl": tmpl_cmakelists_txt, "filename": "CMakeLists.txt", kind:"cmake"},
     ];
 
     // タブを一旦空にする

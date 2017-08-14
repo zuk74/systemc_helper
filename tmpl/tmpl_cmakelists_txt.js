@@ -23,5 +23,4 @@ add_executable(${TARGET} ${SRCS})
 
 target_link_libraries(${TARGET} systemc)
 
-#endif
 */}).toString().match(/\/\*([^]*)\*\//)[1];
