@@ -25,7 +25,7 @@ SC_MODULE( <%= module_name %> )
 <%   if (signals[i].kind == "sync_reset") { %>
     reset_signal_is( <%= signals[i].var_name %>, true );
 <%   } else if (signals[i].kind == "async_reset") { %>
-    asyn_reset_signal_is( <%= signals[i].var_name %>, false );
+    async_reset_signal_is( <%= signals[i].var_name %>, false );
 <%   } %>
 <% } %>
   }

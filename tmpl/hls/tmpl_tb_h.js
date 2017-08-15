@@ -25,13 +25,6 @@ SC_MODULE( tb )
 <%     break; %>
 <%   } %>
 <% } %>
-<% for (var i=0; i<signals.length; i++) { %>
-<%   if (signals[i].kind == "sync_reset") { %>
-    reset_signal_is( <%= signals[i].var_name %>, true );
-<%   } else if (signals[i].kind == "async_reset") { %>
-    asyn_reset_signal_is( <%= signals[i].var_name %>, false );
-<%   } %>
-<% } %>
 
 <% for (var i=0; i<signals.length; i++) { %>
 <%   if (signals[i].kind == "clock") { %>

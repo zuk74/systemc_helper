@@ -3,7 +3,16 @@ var tmpl_systop_h = (function() {/*\
 #define __SYSTOP_H_
 
 #include <systemc.h>
+<% if (options.vivado_hls) { %>
+#ifndef __RTL_SIMULATION__
+#include "<%= module_name %>_rtl_wrapper.h"
+#define <%= module_name %> <%= module_name %>_rtl_wrapper
+#else
 #include "<%= module_name %>.h"
+#endif
+<% } else { %>
+#include "<%= module_name %>.h"
+<% } %>
 #include "tb.h"
 
 SC_MODULE( systop )

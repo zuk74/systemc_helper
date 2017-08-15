@@ -8,7 +8,9 @@ set(TARGET sim.x)
 
 project(test CXX)
 
-#add_definitions(-DSYSC_DUMP_VCD_FILE)
+<% if (options.vcd_dump) { %>
+add_definitions(-DSYSC_DUMP_VCD_FILE)
+<% } %>
 include_directories(${SYSTEMC_HOME}/include ./)
 link_directories(${SYSTEMC_HOME}/lib-macosx64)
 #link_directories(${SYSTEMC_HOME}/lib-linux64)

@@ -10,6 +10,29 @@ void tb::thread_src()
   <%= signals[i].var_name %>.write( 0 );
 <%   } %>
 <% } %>
+
+  // reset
+<% for (var i=0; i<signals.length; i++) { %>
+<%   if ((signals[i].kind == "sync_reset" || signals[i].kind == "async_reset") && (signals[i].dir == "in")) { %>
+<%     if (signals[i].kind == "sync_reset") { %>
+  <%= signals[i].var_name %>.write( true );
+<%     } else { %>
+  <%= signals[i].var_name %>.write( false );
+<%     } %>
+<%   } %>
+<% } %>
+  wait();
+  wait();
+<% for (var i=0; i<signals.length; i++) { %>
+<%   if ((signals[i].kind == "sync_reset" || signals[i].kind == "async_reset") && (signals[i].dir == "in")) { %>
+<%     if (signals[i].kind == "sync_reset") { %>
+  <%= signals[i].var_name %>.write( false );
+<%     } else { %>
+  <%= signals[i].var_name %>.write( true );
+<%     } %>
+<%   } %>
+<% } %>
+  wait();
   wait();
 
   for (int i=0; i<100; i++) {
